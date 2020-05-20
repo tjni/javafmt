@@ -1,0 +1,16 @@
+use crate::lexer;
+
+grammar<'input>(input: &'input str);
+
+pub Abstract = {
+    "abstract",
+};
+
+extern {
+    type Location = usize;
+    type Error = lexer::LexicalError;
+
+    enum lexer::Token<'input> {
+        "abstract" => lexer::Token::AssertKeyword,
+    }
+}
