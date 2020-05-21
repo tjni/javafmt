@@ -2,15 +2,21 @@ use crate::lexer;
 
 grammar<'input>(input: &'input str);
 
-pub Abstract = {
-    "abstract",
+pub Abstract: &'input str = {
+    "abstract" => "hi",
+    "LineComment" => <>,
 };
 
 extern {
     type Location = usize;
     type Error = lexer::LexicalError;
 
-    enum lexer::Token<'input> {
-        "abstract" => lexer::Token::AssertKeyword,
+    enum lexer::LocatableToken<'input> {
+
+        "abstract"    => lexer::LocatableToken(_,
+            lexer::Token::AbstractKeyword),
+
+        "LineComment" => lexer::LocatableToken(_,
+            lexer::Token::LineComment(<&'input str>)),
     }
 }

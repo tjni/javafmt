@@ -8,166 +8,166 @@ pub struct Position {
 }
 
 #[derive(Clone, Copy, Debug)]
-pub struct Range(Position, Position);
-
-#[derive(Clone, Copy, Debug)]
 pub enum Token<'input> {
     //
     // § 3.6. White Space
     //
-    EndOfLine(&'input str, Range),
+    EndOfLine(&'input str),
 
     //
     // § 3.7. Comments
     //
-    BlockComment(&'input str, Range),
-    LineComment(&'input str, Range),
+    BlockComment(&'input str),
+    LineComment(&'input str),
 
     //
     // § 3.8. Identifiers
     //
-    Identifier(&'input str, Range),
+    Identifier(&'input str),
 
     //
     // § 3.9. Keywords
     //
-    AbstractKeyword(Range),
-    AssertKeyword(Range),
-    BooleanKeyword(Range),
-    BreakKeyword(Range),
-    ByteKeyword(Range),
-    CaseKeyword(Range),
-    CatchKeyword(Range),
-    CharKeyword(Range),
-    ClassKeyword(Range),
-    ConstKeyword(Range),
-    ContinueKeyword(Range),
-    DefaultKeyword(Range),
-    DoKeyword(Range),
-    DoubleKeyword(Range),
-    ElseKeyword(Range),
-    EnumKeyword(Range),
-    ExtendsKeyword(Range),
-    FinalKeyword(Range),
-    FinallyKeyword(Range),
-    FloatKeyword(Range),
-    ForKeyword(Range),
-    IfKeyword(Range),
-    GotoKeyword(Range),
-    ImplementsKeyword(Range),
-    ImportKeyword(Range),
-    InstanceofKeyword(Range),
-    IntKeyword(Range),
-    InterfaceKeyword(Range),
-    LongKeyword(Range),
-    NativeKeyword(Range),
-    NewKeyword(Range),
-    PackageKeyword(Range),
-    PrivateKeyword(Range),
-    ProtectedKeyword(Range),
-    PublicKeyword(Range),
-    ReturnKeyword(Range),
-    ShortKeyword(Range),
-    StaticKeyword(Range),
-    StrictfpKeyword(Range),
-    SuperKeyword(Range),
-    SwitchKeyword(Range),
-    SynchronizedKeyword(Range),
-    ThisKeyword(Range),
-    ThrowKeyword(Range),
-    ThrowsKeyword(Range),
-    TransientKeyword(Range),
-    TryKeyword(Range),
-    VoidKeyword(Range),
-    VolatileKeyword(Range),
-    WhileKeyword(Range),
+    AbstractKeyword,
+    AssertKeyword,
+    BooleanKeyword,
+    BreakKeyword,
+    ByteKeyword,
+    CaseKeyword,
+    CatchKeyword,
+    CharKeyword,
+    ClassKeyword,
+    ConstKeyword,
+    ContinueKeyword,
+    DefaultKeyword,
+    DoKeyword,
+    DoubleKeyword,
+    ElseKeyword,
+    EnumKeyword,
+    ExtendsKeyword,
+    FinalKeyword,
+    FinallyKeyword,
+    FloatKeyword,
+    ForKeyword,
+    IfKeyword,
+    GotoKeyword,
+    ImplementsKeyword,
+    ImportKeyword,
+    InstanceofKeyword,
+    IntKeyword,
+    InterfaceKeyword,
+    LongKeyword,
+    NativeKeyword,
+    NewKeyword,
+    PackageKeyword,
+    PrivateKeyword,
+    ProtectedKeyword,
+    PublicKeyword,
+    ReturnKeyword,
+    ShortKeyword,
+    StaticKeyword,
+    StrictfpKeyword,
+    SuperKeyword,
+    SwitchKeyword,
+    SynchronizedKeyword,
+    ThisKeyword,
+    ThrowKeyword,
+    ThrowsKeyword,
+    TransientKeyword,
+    TryKeyword,
+    VoidKeyword,
+    VolatileKeyword,
+    WhileKeyword,
 
     //
     // § 3.9. Restricted Keywords
     //
-    ExportsKeyword(Range),
-    ModuleKeyword(Range),
-    OpenKeyword(Range),
-    OpensKeyword(Range),
-    ProvidesKeyword(Range),
-    RequiresKeyword(Range),
-    ToKeyword(Range),
-    TransitiveKeyword(Range),
-    UsesKeyword(Range),
-    WithKeyword(Range),
+    ExportsKeyword,
+    ModuleKeyword,
+    OpenKeyword,
+    OpensKeyword,
+    ProvidesKeyword,
+    RequiresKeyword,
+    ToKeyword,
+    TransitiveKeyword,
+    UsesKeyword,
+    WithKeyword,
 
     //
     // § 3.10. Literals
     //
-    DecimalIntegerLiteral(&'input str, Range),
-    HexIntegerLiteral(&'input str, Range),
-    OctalIntegerLiteral(&'input str, Range),
-    BinaryIntegerLiteral(&'input str, Range),
-    DecimalFloatingPointLiteral(&'input str, Range),
-    HexFloatingPointLiteral(&'input str, Range),
-    BooleanLiteral(&'input str, Range),
-    CharacterLiteral(&'input str, Range),
-    StringLiteral(&'input str, Range),
-    NullLiteral(Range),
+    DecimalIntegerLiteral(&'input str),
+    HexIntegerLiteral(&'input str),
+    OctalIntegerLiteral(&'input str),
+    BinaryIntegerLiteral(&'input str),
+    DecimalFloatingPointLiteral(&'input str),
+    HexFloatingPointLiteral(&'input str),
+    BooleanLiteral(&'input str),
+    CharacterLiteral(&'input str),
+    StringLiteral(&'input str),
+    NullLiteral,
 
     // 
     // § 3.11. Separators
     //
-    LeftParenSeparator(Range),
-    RightParenSeparator(Range),
-    LeftBraceSeparator(Range),
-    RightBraceSeparator(Range),
-    LeftBracketSeparator(Range),
-    RightBracketSeparator(Range),
-    SemicolonSeparator(Range),
-    CommaSeparator(Range),
-    EllipsisSeparator(Range),
-    DotSeparator(Range),
-    AtSeparator(Range),
-    DoubleColonSeparator(Range),
+    LeftParenSeparator,
+    RightParenSeparator,
+    LeftBraceSeparator,
+    RightBraceSeparator,
+    LeftBracketSeparator,
+    RightBracketSeparator,
+    SemicolonSeparator,
+    CommaSeparator,
+    EllipsisSeparator,
+    DotSeparator,
+    AtSeparator,
+    DoubleColonSeparator,
 
     //
     // § 3.12. Operators
     //
-    EqualOperator(Range),
-    AssignOperator(Range),
-    NotEqualOperator(Range),
-    NotOperator(Range),
-    UnsignedRightShiftAssignOperator(Range),
-    UnsignedRightShiftOperator(Range),
-    RightShiftAssignOperator(Range),
-    RightShiftOperator(Range),
-    GreaterEqualOperator(Range),
-    GreaterOperator(Range),
-    LeftShiftAssignOperator(Range),
-    LeftShiftOperator(Range),
-    LessEqualOperator(Range),
-    LessOperator(Range),
-    IncrementOperator(Range),
-    PlusAssignOperator(Range),
-    PlusOperator(Range),
-    ArrowOperator(Range),
-    DecrementOperator(Range),
-    MinusAssignOperator(Range),
-    MinusOperator(Range),
-    TimesAssignOperator(Range),
-    TimesOperator(Range),
-    DivideAssignOperator(Range),
-    DivideOperator(Range),
-    ModAssignOperator(Range),
-    ModOperator(Range),
-    ComplementOperator(Range),
-    ConditionalAndOperator(Range),
-    BitAndAssignOperator(Range),
-    BitAndOperator(Range),
-    ConditionalOrOperator(Range),
-    BitOrAssignOperator(Range),
-    BitOrOperator(Range),
-    BitXorAssignOperator(Range),
-    BitXorOperator(Range),
-    TernaryIfOperator(Range),
-    TernaryElseOperator(Range),
+    EqualOperator,
+    AssignOperator,
+    NotEqualOperator,
+    NotOperator,
+    UnsignedRightShiftAssignOperator,
+    UnsignedRightShiftOperator,
+    RightShiftAssignOperator,
+    RightShiftOperator,
+    GreaterEqualOperator,
+    GreaterOperator,
+    LeftShiftAssignOperator,
+    LeftShiftOperator,
+    LessEqualOperator,
+    LessOperator,
+    IncrementOperator,
+    PlusAssignOperator,
+    PlusOperator,
+    ArrowOperator,
+    DecrementOperator,
+    MinusAssignOperator,
+    MinusOperator,
+    TimesAssignOperator,
+    TimesOperator,
+    DivideAssignOperator,
+    DivideOperator,
+    ModAssignOperator,
+    ModOperator,
+    ComplementOperator,
+    ConditionalAndOperator,
+    BitAndAssignOperator,
+    BitAndOperator,
+    ConditionalOrOperator,
+    BitOrAssignOperator,
+    BitOrOperator,
+    BitXorAssignOperator,
+    BitXorOperator,
+    TernaryIfOperator,
+    TernaryElseOperator,
 }
+
+#[derive(Clone, Copy, Debug)]
+pub struct LocatableToken<'input>(pub Position, pub Token<'input>);
 
 #[derive(Clone, Copy, Debug)]
 pub struct LexicalError {
@@ -202,7 +202,7 @@ lazy_static! {
     //   the ASCII CR character, also known as "return"
     //   the ASCII CR character followed by the ASCII LF character
     //
-    static ref END_OF_LINE: Regex = Regex::new(r"^\r?\n?").unwrap();
+    static ref END_OF_LINE: Regex = Regex::new(r"^(?:\n|\r|\r\n)").unwrap();
 }
 
 // 
@@ -743,69 +743,13 @@ impl<'input> JavaLexer<'input> {
         }
     }
 
-    fn nextToken(&mut self) -> Option<Token<'input>> {
-    }
-
-    fn handleEndOfLine(&mut self, mat: &Match<'input>) -> Token<'input> {
-        self.offset += mat.end();
-        self.line   += 1;
-        self.column  = 0;
-        Token::EndOfLine(mat.as_str())
-    }
-
-    fn handleBlockComment(&mut self, mat: &Match<'input>) -> Token<'input> {
-        self.offset += mat.end();
-
-        let comment = mat.as_str();
-
-        let eol_mats = END_OF_LINE_CHARS.find_iter(comment);
-        if let Some((mat_index, eol_mat)) = eol_mats.enumerate().last() {
-            let num_eols = mat_index + 1;
-            self.line   += num_eols;
-            self.column  = mat.end() - eol_mat.end();
-        } else {
-            self.column += mat.end();
-        }
-
-        Token::BlockComment(comment)
-    }
-
-    fn consume(&mut self, regex: &Regex) -> Option<Match<'input>> {
-        regex.find(self.input).map(|mat| {
-            self.input = &self.input[mat.end()..];
-            mat
-        })
-    }
-
-    fn consume_without_eols(&mut self, regex: &Regex) -> Option<Match<'input>> {
-        self.consume(regex).map(|mat| {
-            self.offset += mat.end();
-            self.column += mat.end();
-            mat
-        })
-    }
-}
-
-impl<'input> Iterator for JavaLexer<'input> {
-    type Item = Result<(usize, LocatableToken<'input>, usize), LexicalError>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-
-        self.consume_without_eols(&SPACES);
-
-        if self.input.is_empty() {
-            return None
-        }
-
-        let start_offset = self.offset;
-
-        let start_position = Position {
-            line   : self.line,
-            column : self.column,
-        };
-
+    fn next_token(&mut self) -> Option<Token<'input>> {
         if let Some(mat) = self.consume(&END_OF_LINE) {
-            Some(self.handleEndOfLine(&mat))
+            Some(self.handle_end_of_line(&mat))
+        } else if let Some(mat) = self.consume(&BLOCK_COMMENT) {
+            Some(self.handle_block_comment(&mat))
+        } else if let Some(mat) = self.consume_without_eols(&LINE_COMMENT) {
+            Some(Token::LineComment(mat.as_str()))
         } else if let Some(_) = self.consume_without_eols(&ABSTRACT) {
             Some(Token::AbstractKeyword)
         } else if let Some(_) = self.consume_without_eols(&ASSERT) {
@@ -1030,7 +974,7 @@ impl<'input> Iterator for JavaLexer<'input> {
             Some(Token::CharacterLiteral(mat.as_str()))
         } else if let Some(mat) = self.consume_without_eols(&BOOLEAN_LITERAL) {
             Some(Token::BooleanLiteral(mat.as_str()))
-        } else if let Some(mat) = self.consume_without_eols(&NULL_LITERAL) {
+        } else if let Some(_) = self.consume_without_eols(&NULL_LITERAL) {
             Some(Token::NullLiteral)
         } else if let Some(mat) = self.consume_without_eols(&DECIMAL_INTEGER_LITERAL) {
             Some(Token::DecimalIntegerLiteral(mat.as_str()))
@@ -1046,26 +990,72 @@ impl<'input> Iterator for JavaLexer<'input> {
             Some(Token::BinaryIntegerLiteral(mat.as_str()))
         } else if let Some(mat) = self.consume_without_eols(&IDENTIFIER) {
             Some(Token::Identifier(mat.as_str()))
-        } else if let Some(mat) = self.consume(&BLOCK_COMMENT) {
-            Some(self.handleBlockComment(&mat))
-        } else if let Some(mat) = self.consume_without_eols(&LINE_COMMENT) {
-            Some(Token::LineComment(mat.as_str()))
         } else {
             None
         }
+    }
 
+    fn handle_end_of_line(&mut self, mat: &Match<'input>) -> Token<'input> {
+        self.offset += mat.end();
+        self.line   += 1;
+        self.column  = 0;
+        Token::EndOfLine(mat.as_str())
+    }
 
-        if let Some(token) = self.nextToken() {
+    fn handle_block_comment(&mut self, mat: &Match<'input>) -> Token<'input> {
+        self.offset += mat.end();
+
+        let comment = mat.as_str();
+
+        let eol_mats = END_OF_LINE_CHARS.find_iter(comment);
+        if let Some((mat_index, eol_mat)) = eol_mats.enumerate().last() {
+            let num_eols = mat_index + 1;
+            self.line   += num_eols;
+            self.column  = mat.end() - eol_mat.end();
+        } else {
+            self.column += mat.end();
+        }
+
+        Token::BlockComment(comment)
+    }
+
+    fn consume(&mut self, regex: &Regex) -> Option<Match<'input>> {
+        regex.find(self.input).map(|mat| {
+            self.input = &self.input[mat.end()..];
+            mat
+        })
+    }
+
+    fn consume_without_eols(&mut self, regex: &Regex) -> Option<Match<'input>> {
+        self.consume(regex).map(|mat| {
+            self.offset += mat.end();
+            self.column += mat.end();
+            mat
+        })
+    }
+}
+
+impl<'input> Iterator for JavaLexer<'input> {
+    type Item = Result<(usize, LocatableToken<'input>, usize), LexicalError>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+
+        self.consume_without_eols(&SPACES);
+
+        if self.input.is_empty() {
+            return None
+        }
+
+        let start_offset = self.offset;
+
+        let start_position = Position {
+            line   : self.line,
+            column : self.column,
+        };
+
+        if let Some(token) = self.next_token() {
             let end_offset = self.offset;
-
-            let end_position = Position {
-                line   : self.line,
-                column : self.column,
-            };
-
-            let locatable_token = LocatableToken(
-                token, Range(start_position, end_position));
-
+            let locatable_token = LocatableToken(start_position, token);
             Some(Ok((start_offset, locatable_token, end_offset)))
         } else {
             Some(Err(LexicalError { position: start_position }))

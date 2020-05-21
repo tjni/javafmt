@@ -10,7 +10,7 @@ fn main() {
 
 #[test]
 fn test() {
-    let input = "break assert";
+    let input = "// bljaiosdhfi";
     let lexer = lexer::JavaLexer::new(input);
     println!("Parse result is {:?}", java::AbstractParser::new().parse(input, lexer).unwrap());
     assert!(false);
