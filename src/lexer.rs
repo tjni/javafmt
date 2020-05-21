@@ -232,7 +232,7 @@ lazy_static! {
     //   InputCharacter but not * or /
     //   LineTerminator
     //
-    static ref BLOCK_COMMENT: Regex = Regex::new(r"^/\*[.\n]*?\*/").unwrap();
+    static ref BLOCK_COMMENT: Regex = Regex::new(r"^/\*(?:.|\n)*?\*/").unwrap();
 
     //
     // This regular expression matches the following productions.

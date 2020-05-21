@@ -1,10 +1,24 @@
+use crate::ast::*;
 use crate::lexer;
 
 grammar<'input>(input: &'input str);
 
-pub Abstract: &'input str = {
-    "abstract" => "hi",
-    "LineComment" => <>,
+//
+// § 7 Packages
+//
+pub CompilationUnit = {
+    PackageDeclaration?
+};
+// ImportDeclarations? TypeDeclarations?
+
+PackageDeclaration: Vec<Formatting<'input>> = {
+    <F*> "package" F* => <>,
+};
+
+F: Formatting<'input> = {
+    "\n"         => Formatting::EndOfLine(<>.0, <>.1),
+    BlockComment => Formatting::BlockComment(<>.0, <>.1),
+    LineComment  => Formatting::LineComment(<>.0, <>.1),
 };
 
 extern {
@@ -12,11 +26,151 @@ extern {
     type Error = lexer::LexicalError;
 
     enum lexer::LocatableToken<'input> {
+        "\n"           => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::EndOfLine(<&'input str>)),
 
-        "abstract"    => lexer::LocatableToken(_,
-            lexer::Token::AbstractKeyword),
+        BlockComment   => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::BlockComment(<&'input str>)),
 
-        "LineComment" => lexer::LocatableToken(_,
+        LineComment    => lexer::LocatableToken(<lexer::Position>,
             lexer::Token::LineComment(<&'input str>)),
+
+        Identifier     => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::Identifier(<&'input str>)),
+
+        "abstract"     => lexer::LocatableToken(<lexer::Position>, lexer::Token::AbstractKeyword),
+        "assert"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::AssertKeyword),
+        "boolean"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::BooleanKeyword),
+        "break"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::BreakKeyword),
+        "byte"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::ByteKeyword),
+        "case"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::CaseKeyword),
+        "catch"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::CatchKeyword),
+        "char"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::CharKeyword),
+        "class"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::ClassKeyword),
+        "const"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::ConstKeyword),
+        "continue"     => lexer::LocatableToken(<lexer::Position>, lexer::Token::ContinueKeyword),
+        "default"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::DefaultKeyword),
+        "do"           => lexer::LocatableToken(<lexer::Position>, lexer::Token::DoKeyword),
+        "double"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::DoubleKeyword),
+        "else"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::ElseKeyword),
+        "enum"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::EnumKeyword),
+        "extends"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::ExtendsKeyword),
+        "final"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::FinalKeyword),
+        "finally"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::FinallyKeyword),
+        "float"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::FloatKeyword),
+        "for"          => lexer::LocatableToken(<lexer::Position>, lexer::Token::ForKeyword),
+        "if"           => lexer::LocatableToken(<lexer::Position>, lexer::Token::IfKeyword),
+        "goto"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::GotoKeyword),
+        "implements"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::ImplementsKeyword),
+        "import"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::ImportKeyword),
+        "instanceof"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::InstanceofKeyword),
+        "int"          => lexer::LocatableToken(<lexer::Position>, lexer::Token::IntKeyword),
+        "interface"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::InterfaceKeyword),
+        "long"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::LongKeyword),
+        "native"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::NativeKeyword),
+        "new"          => lexer::LocatableToken(<lexer::Position>, lexer::Token::NewKeyword),
+        "package"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::PackageKeyword),
+        "private"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::PrivateKeyword),
+        "protected"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::ProtectedKeyword),
+        "public"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::PublicKeyword),
+        "return"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::ReturnKeyword),
+        "short"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::ShortKeyword),
+        "static"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::StaticKeyword),
+        "strictfp"     => lexer::LocatableToken(<lexer::Position>, lexer::Token::StrictfpKeyword),
+        "super"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::SuperKeyword),
+        "switch"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::SwitchKeyword),
+        "synchronized" => lexer::LocatableToken(<lexer::Position>, lexer::Token::SynchronizedKeyword),
+        "this"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::ThisKeyword),
+        "throw"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::ThrowKeyword),
+        "throws"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::ThrowsKeyword),
+        "transient"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::TransientKeyword),
+        "try"          => lexer::LocatableToken(<lexer::Position>, lexer::Token::TryKeyword),
+        "void"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::VoidKeyword),
+        "volatile"     => lexer::LocatableToken(<lexer::Position>, lexer::Token::VolatileKeyword),
+        "while"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::WhileKeyword),
+
+        "exports"      => lexer::LocatableToken(<lexer::Position>, lexer::Token::ExportsKeyword),
+        "module"       => lexer::LocatableToken(<lexer::Position>, lexer::Token::ModuleKeyword),
+        "open"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::OpenKeyword),
+        "opens"        => lexer::LocatableToken(<lexer::Position>, lexer::Token::OpensKeyword),
+        "provides"     => lexer::LocatableToken(<lexer::Position>, lexer::Token::ProvidesKeyword),
+        "requires"     => lexer::LocatableToken(<lexer::Position>, lexer::Token::RequiresKeyword),
+        "to"           => lexer::LocatableToken(<lexer::Position>, lexer::Token::ToKeyword),
+        "transitive"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::TransitiveKeyword),
+        "uses"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::UsesKeyword),
+        "with"         => lexer::LocatableToken(<lexer::Position>, lexer::Token::WithKeyword),
+
+        DecimalIntegerLiteral       => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::DecimalIntegerLiteral(<&'input str>)),
+        HexIntegerLiteral           => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::HexIntegerLiteral(<&'input str>)),
+        OctalIntegerLiteral         => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::OctalIntegerLiteral(<&'input str>)),
+        BinaryIntegerLiteral        => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::BinaryIntegerLiteral(<&'input str>)),
+        DecimalFloatingPointLiteral => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::DecimalFloatingPointLiteral(<&'input str>)),
+        HexFloatingPointLiteral     => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::HexFloatingPointLiteral(<&'input str>)),
+        BooleanLiteral              => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::BooleanLiteral(<&'input str>)),
+        CharacterLiteral            => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::CharacterLiteral(<&'input str>)),
+        StringLiteral               => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::StringLiteral(<&'input str>)),
+        "null"                      => lexer::LocatableToken(<lexer::Position>,
+            lexer::Token::NullLiteral),
+
+        "("    => lexer::LocatableToken(<lexer::Position>, lexer::Token::LeftParenSeparator),
+        ")"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::RightParenSeparator),
+        "{"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::LeftBraceSeparator),
+        "}"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::RightBraceSeparator),
+        "["    => lexer::LocatableToken(<lexer::Position>, lexer::Token::LeftBracketSeparator),
+        "]"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::RightBracketSeparator),
+        ";"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::SemicolonSeparator),
+        ","    => lexer::LocatableToken(<lexer::Position>, lexer::Token::CommaSeparator),
+        "..."  => lexer::LocatableToken(<lexer::Position>, lexer::Token::EllipsisSeparator),
+        "."    => lexer::LocatableToken(<lexer::Position>, lexer::Token::DotSeparator),
+        "@"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::AtSeparator),
+        "::"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::DoubleColonSeparator),
+
+        "=="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::EqualOperator),
+        "="    => lexer::LocatableToken(<lexer::Position>, lexer::Token::AssignOperator),
+        "!="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::NotEqualOperator),
+        "!"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::NotOperator),
+        ">>>=" => lexer::LocatableToken(<lexer::Position>, lexer::Token::UnsignedRightShiftAssignOperator),
+        ">>>"  => lexer::LocatableToken(<lexer::Position>, lexer::Token::UnsignedRightShiftOperator),
+        ">>="  => lexer::LocatableToken(<lexer::Position>, lexer::Token::RightShiftAssignOperator),
+        ">>"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::RightShiftOperator),
+        ">="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::GreaterEqualOperator),
+        ">"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::GreaterOperator),
+        "<<="  => lexer::LocatableToken(<lexer::Position>, lexer::Token::LeftShiftAssignOperator),
+        "<<"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::LeftShiftOperator),
+        "<="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::LessEqualOperator),
+        "<"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::LessOperator),
+        "++"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::IncrementOperator),
+        "+="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::PlusAssignOperator),
+        "+"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::PlusOperator),
+        "->"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::ArrowOperator),
+        "--"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::DecrementOperator),
+        "-="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::MinusAssignOperator),
+        "-"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::MinusOperator),
+        "*="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::TimesAssignOperator),
+        "*"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::TimesOperator),
+        "/="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::DivideAssignOperator),
+        "/"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::DivideOperator),
+        "%="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::ModAssignOperator),
+        "%"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::ModOperator),
+        "~"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::ComplementOperator),
+        "&&"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::ConditionalAndOperator),
+        "&="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::BitAndAssignOperator),
+        "&"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::BitAndOperator),
+        "||"   => lexer::LocatableToken(<lexer::Position>, lexer::Token::ConditionalOrOperator),
+        "|="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::BitOrAssignOperator),
+        "|"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::BitOrOperator),
+        "^="   => lexer::LocatableToken(<lexer::Position>, lexer::Token::BitXorAssignOperator),
+        "^"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::BitXorOperator),
+        "?"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::TernaryIfOperator),
+        ":"    => lexer::LocatableToken(<lexer::Position>, lexer::Token::TernaryElseOperator),
     }
 }
